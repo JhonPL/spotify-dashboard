@@ -112,7 +112,7 @@ function _build() {
   // ── Layout Split ──────────────────────────────────────────────────────────
   const CTRL_H = 36;
   const bodyWrap = document.createElement("div");
-  bodyWrap.style.cssText = `position:absolute;top:${CTRL_H}px;left:0;width:100%;height:calc(100% - ${CTRL_H}px);display:flex;`;
+  bodyWrap.style.cssText = `position:absolute;top:${CTRL_H}px;left:0;width:100%;height:calc(100% - ${CTRL_H}px);display:flex;flex-direction:row;`;
   _container.appendChild(bodyWrap);
 
   const chartWrap = document.createElement("div");
@@ -120,16 +120,16 @@ function _build() {
   bodyWrap.appendChild(chartWrap);
 
   _statsWrap = document.createElement("div");
-  _statsWrap.style.cssText = `width: 250px; border-left: 1px solid var(--border-subtle); background: rgba(0,0,0,0.15); overflow-y: auto; padding: 16px;`;
+  _statsWrap.style.cssText = `width: 200px; border-left: 1px solid var(--border-subtle); background: rgba(0,0,0,0.15); overflow-y: auto; padding: 16px;`;
   bodyWrap.appendChild(_statsWrap);
 
   // ── Dimensiones ───────────────────────────────────────────────────────────
-  const chartW = Math.max(w - 250, 200);
+  const chartW = Math.max(w - 200, 200);
   const chartH = h - CTRL_H;
 
-  const PADDING    = 40;
+  const PADDING    = 75; // Medida perfecta para "Instrumentalness" sin encoger el gráfico
   const available  = Math.min(chartW, chartH) - PADDING * 2;
-  _radius          = Math.max(available / 2, 70);
+  _radius          = Math.max(available / 2, 80);
   _center          = { x: chartW / 2, y: chartH / 2 + 8 };
 
   _svg = d3.select(chartWrap)
@@ -242,7 +242,7 @@ function _drawLabels() {
       .attr("x",            lx)
       .attr("y",            ly + 4)
       .attr("text-anchor",  anchor)
-      .attr("font-size",    "10.5px")
+      .attr("font-size",    "10px")
       .attr("font-weight",  "600")
       .attr("fill",         "rgba(255,255,255,0.9)")
       .text(FEATURE_LABELS[axis] || axis);
@@ -534,7 +534,7 @@ function _buildStats(data) {
   const colorB = dB ? genreColor(_genreB) : null;
 
   const title = document.createElement("div");
-  title.style.cssText = "font-size:11px;font-weight:700;color:var(--text-muted);margin-bottom:16px;text-transform:uppercase;letter-spacing:0.8px;";
+  title.style.cssText = "font-size:11px;font-weight:700;color:var(--text-muted);margin-bottom:20px;text-transform:uppercase;letter-spacing:1px;";
   title.textContent = "Perfil de Audio";
   _statsWrap.appendChild(title);
 
@@ -543,11 +543,11 @@ function _buildStats(data) {
     const valB = dB ? (dB[ax] || 0) : null;
 
     const block = document.createElement("div");
-    block.style.cssText = "margin-bottom: 12px;";
+    block.style.cssText = "margin-bottom: 16px;";
 
     // Header
     const header = document.createElement("div");
-    header.style.cssText = "display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;font-size:11px;";
+    header.style.cssText = "display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-size:11px;";
 
     const name = document.createElement("div");
     name.style.cssText = `color:${FEATURE_COLORS[ax] || 'var(--text-secondary)'};font-weight:600;`;

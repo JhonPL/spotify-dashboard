@@ -18,7 +18,8 @@ import { initTreemap }   from "./charts/treemap.js";
 import { initHeatmap }   from "./charts/heatmap.js";      
 import { initScatter }   from "./charts/scatterplot.js";
 import { initStreamgraph }  from "./charts/streamgraph.js";
-import { initRadar } from "./charts/radar.js"; 
+import { initRadar } from "./charts/radar.js";
+import { initChord } from "./charts/chord.js";
 
 // ── Textos por vista ────────────────────────────────────────────────────────
 const VIEW_TITLES = {
@@ -146,7 +147,7 @@ function initViewCharts(viewId) {
 
     case "genres":
       initRadar(document.getElementById("chart-radar"));
-      // initSunburst(document.getElementById("chart-sunburst"));
+      initChord(document.getElementById("chart-chord"));
       // initViolin(document.getElementById("chart-violin"));
       // initRidgeline(document.getElementById("chart-ridgeline"));
       break;
