@@ -1,0 +1,64 @@
+/* ─── variables.css — Design tokens ──────────────────────────────────────── */
+:root {
+  /* Paleta Spotify */
+  --spotify-green:       #1DB954;
+  --spotify-green-dim:   #1aa34a;
+  --spotify-green-glow:  rgba(29, 185, 84, 0.15);
+  --spotify-green-soft:  rgba(29, 185, 84, 0.08);
+
+  /* Fondos */
+  --bg-base:        #0a0a0a;
+  --bg-surface:     #111111;
+  --bg-elevated:    #181818;
+  --bg-panel:       #161616;
+  --bg-hover:       #1f1f1f;
+  --bg-glass:       rgba(255, 255, 255, 0.04);
+  --bg-glass-hover: rgba(255, 255, 255, 0.07);
+
+  /* Bordes */
+  --border-subtle:  rgba(255, 255, 255, 0.06);
+  --border-soft:    rgba(255, 255, 255, 0.10);
+  --border-strong:  rgba(255, 255, 255, 0.16);
+
+  /* Texto */
+  --text-primary:   #ffffff;
+  --text-secondary: #b3b3b3;
+  --text-muted:     #6a6a6a;
+  --text-hint:      #404040;
+
+  /* Acentos */
+  --accent-blue:    #4a9eff;
+  --accent-purple:  #9b59f5;
+  --accent-orange:  #ff6b35;
+  --accent-pink:    #e91e8c;
+  --accent-teal:    #00d4aa;
+  --accent-yellow:  #f5c542;
+
+  /* Paleta de géneros (20 colores perceptualmente distintos) */
+  --g0:  #1DB954; --g1:  #4a9eff; --g2:  #e91e8c; --g3:  #ff6b35;
+  --g4:  #9b59f5; --g5:  #00d4aa; --g6:  #f5c542; --g7:  #ff4757;
+  --g8:  #2ed573; --g9:  #ffa502; --g10: #a29bfe; --g11: #fd79a8;
+  --g12: #00cec9; --g13: #6c5ce7; --g14: #fdcb6e; --g15: #e17055;
+  --g16: #74b9ff; --g17: #55efc4; --g18: #fab1a0; --g19: #dfe6e9;
+
+  /* Layout */
+  --sidebar-w:      220px;
+  --topbar-h:       64px;
+  --panel-radius:   12px;
+  --panel-gap:      12px;
+  --panel-padding:  16px;
+
+  /* Sombras */
+  --shadow-sm:  0 2px 8px rgba(0,0,0,0.4);
+  --shadow-md:  0 4px 20px rgba(0,0,0,0.5);
+  --shadow-lg:  0 8px 40px rgba(0,0,0,0.6);
+  --glow-green: 0 0 20px rgba(29,185,84,0.2);
+
+  /* Tipografía */
+  --font:         'Inter', -apple-system, sans-serif;
+  --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Transiciones */
+  --transition:   all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}

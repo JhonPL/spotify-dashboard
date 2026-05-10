@@ -1,0 +1,213 @@
+/* ─── layout.css ──────────────────────────────────────────────────────────── */
+
+/* ── Sidebar ──────────────────────────────────────────────────────────────── */
+.sidebar {
+  width: var(--sidebar-w);
+  min-width: var(--sidebar-w);
+  height: 100vh;
+  background: var(--bg-surface);
+  border-right: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.sidebar__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 20px 24px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.logo-icon { width: 28px; height: 28px; }
+.logo-text  {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  background: linear-gradient(135deg, var(--spotify-green), var(--accent-teal));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Nav items */
+.sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 16px 10px;
+  flex: 1;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 400;
+  transition: var(--transition);
+  cursor: pointer;
+}
+.nav-item svg { width: 18px; height: 18px; flex-shrink: 0; }
+.nav-item:hover  { background: var(--bg-hover); color: var(--text-primary); }
+.nav-item.active { background: var(--spotify-green-soft); color: var(--spotify-green); font-weight: 500; }
+
+/* Meta stats */
+.sidebar__meta {
+  padding: 16px 20px;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.meta-stat { display: flex; flex-direction: column; gap: 1px; }
+.meta-value { font-size: 1rem; font-weight: 600; color: var(--text-primary); }
+.meta-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* ── Main ─────────────────────────────────────────────────────────────────── */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ── Topbar ───────────────────────────────────────────────────────────────── */
+.topbar {
+  height: var(--topbar-h);
+  min-height: var(--topbar-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+}
+.topbar__left { display: flex; flex-direction: column; gap: 2px; }
+.topbar__title { font-size: 1.1rem; font-weight: 600; }
+.topbar__subtitle { font-size: 0.75rem; color: var(--text-muted); }
+.topbar__right { display: flex; align-items: center; gap: 10px; }
+
+/* Filtro activo pill */
+.filter-pill {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--spotify-green-soft);
+  border: 1px solid var(--spotify-green);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 0.8rem;
+  color: var(--spotify-green);
+}
+.filter-clear {
+  background: none; border: none; color: var(--spotify-green);
+  cursor: pointer; font-size: 12px; padding: 0; line-height: 1;
+}
+.filter-clear:hover { color: var(--text-primary); }
+
+/* Select global */
+.select-genre {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-size: 0.8rem;
+  padding: 6px 12px;
+  cursor: pointer;
+  outline: none;
+  transition: var(--transition);
+}
+.select-genre:hover { border-color: var(--border-strong); }
+
+/* ── Vistas ───────────────────────────────────────────────────────────────── */
+.view {
+  display: none;
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--panel-gap);
+}
+.view.active { display: flex; flex-direction: column; gap: var(--panel-gap); }
+
+/* ── KPI Row ──────────────────────────────────────────────────────────────── */
+.kpi-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--panel-gap);
+}
+.kpi-card {
+  border-radius: var(--panel-radius);
+  padding: 16px 20px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.kpi-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.kpi-value { font-size: 1.8rem; font-weight: 700; color: var(--spotify-green); line-height: 1; }
+.kpi-sub   { font-size: 0.7rem; color: var(--text-hint); }
+
+/* ── Grillas por vista ────────────────────────────────────────────────────── */
+
+/* Overview: treemap grande + heatmap + scatter + streamgraph */
+.grid--overview {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  grid-template-rows: auto auto;
+  gap: var(--panel-gap);
+  flex: 1;
+}
+.panel--treemap    { grid-column: 1; grid-row: 1; min-height: 320px; }
+.panel--heatmap    { grid-column: 2; grid-row: 1; min-height: 320px; }
+.panel--scatter    { grid-column: 1; grid-row: 2; min-height: 300px; }
+.panel--streamgraph { grid-column: 2; grid-row: 2; min-height: 300px; }
+
+/* Géneros */
+.grid--genres {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: var(--panel-gap);
+  flex: 1;
+}
+.panel--radar      { min-height: 300px; }
+.panel--sunburst   { min-height: 300px; }
+.panel--violin     { min-height: 280px; }
+.panel--ridgeline  { min-height: 280px; }
+
+/* Features */
+.grid--features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: var(--panel-gap);
+  flex: 1;
+}
+.panel--parallel   { grid-column: 1 / -1; min-height: 320px; }
+.panel--hexbin     { min-height: 280px; }
+.panel--histogram  { min-height: 280px; }
+
+/* Artistas */
+.grid--artists {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  grid-template-rows: auto auto;
+  gap: var(--panel-gap);
+  flex: 1;
+}
+.panel--bubble         { grid-row: 1 / 3; min-height: 560px; }
+.panel--packing        { min-height: 260px; }
+.panel--small-multiples { min-height: 280px; }
+
+/* Relaciones */
+.grid--relations {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  grid-template-rows: auto auto;
+  gap: var(--panel-gap);
+  flex: 1;
+}
+.panel--force  { grid-row: 1 / 3; min-height: 560px; }
+.panel--chord  { min-height: 260px; }
+.panel--sankey { min-height: 280px; }

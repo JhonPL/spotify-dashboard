@@ -1,0 +1,56 @@
+/* ─── base.css ────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 14px; -webkit-font-smoothing: antialiased; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg-base);
+  color: var(--text-primary);
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+}
+
+/* Scrollbar global */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* Tipografía */
+h1 { font-size: 1.4rem; font-weight: 600; }
+h2 { font-size: 1rem;   font-weight: 500; }
+h3 { font-size: 0.875rem; font-weight: 500; }
+
+/* Utilidades */
+.glass {
+  background: var(--bg-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-subtle);
+}
+
+/* Tooltip global */
+.tooltip {
+  position: fixed;
+  pointer-events: none;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  box-shadow: var(--shadow-lg);
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  max-width: 220px;
+  white-space: nowrap;
+}
+.tooltip.visible { opacity: 1; }
+.tooltip-title  { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+.tooltip-row    { display: flex; justify-content: space-between; gap: 16px; }
+.tooltip-key    { color: var(--text-secondary); }
+.tooltip-val    { font-weight: 500; color: var(--spotify-green); }
