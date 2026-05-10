@@ -15,9 +15,10 @@ import { clearAllFilters, selectGenre } from "./core/filters.js";
 
 // ── Gráficos implementados ─────────────────────────────────────────────────
 import { initTreemap }   from "./charts/treemap.js";
-import { initHeatmap }      from "./charts/heatmap.js";      
-import { initScatter }      from "./charts/scatterplot.js";
-import { initStreamgraph }  from "./charts/streamgraph.js"; 
+import { initHeatmap }   from "./charts/heatmap.js";      
+import { initScatter }   from "./charts/scatterplot.js";
+import { initStreamgraph }  from "./charts/streamgraph.js";
+import { initRadar } from "./charts/radar.js"; 
 
 // ── Textos por vista ────────────────────────────────────────────────────────
 const VIEW_TITLES = {
@@ -144,7 +145,7 @@ function initViewCharts(viewId) {
       break;
 
     case "genres":
-      // initRadar(document.getElementById("chart-radar"));
+      initRadar(document.getElementById("chart-radar"));
       // initSunburst(document.getElementById("chart-sunburst"));
       // initViolin(document.getElementById("chart-violin"));
       // initRidgeline(document.getElementById("chart-ridgeline"));

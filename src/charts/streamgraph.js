@@ -544,6 +544,7 @@ function _fullRedraw(genres) {
 // ─── Rebuild en resize ────────────────────────────────────────────────────────
 function _rebuild() {
   const { w, h } = _dims();
+  if (w === 0 || h === 0) return; // Prevent building when hidden
   if (Math.abs(w - _prevW) < 6 && Math.abs(h - _prevH) < 6) return;
   const prevGenre = _activeGenre;
   _build();
@@ -552,6 +553,7 @@ function _rebuild() {
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 function _dims() {
+  if (!_container || _container.clientWidth === 0) return { w: 0, h: 0 };
   const r = _container.getBoundingClientRect();
   return { w: Math.max(r.width, 240), h: Math.max(r.height, 160) };
 }

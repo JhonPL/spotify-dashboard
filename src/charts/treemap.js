@@ -71,20 +71,23 @@ function _build() {
 
   initGenreScale(data.map((d) => d.track_genre));
 
-  _container.innerHTML = "";
-  _container.classList.remove("loading");
-  _container.classList.add("rendered");
-
   const { w, h } = _dims();
   _prevW = w;
   _prevH = h;
+
+  _container.innerHTML = "";
+  _container.classList.remove("loading");
+  _container.classList.add("rendered");
   const innerW = w - MARGIN.left - MARGIN.right;
   const innerH = h - MARGIN.top  - MARGIN.bottom;
 
   _svg = d3.select(_container)
     .append("svg")
-    .attr("width",  "100%")
-    .attr("height", "100%")
+    .style("position", "absolute")
+    .style("top", "0")
+    .style("left", "0")
+    .style("width", "100%")
+    .style("height", "100%")
     .attr("viewBox", `0 0 ${w} ${h}`)
     .attr("preserveAspectRatio", "xMidYMid meet");
 
@@ -344,6 +347,7 @@ function _restoreAll() {
 function _rebuild() {
   // Ignorar notificaciones spurias del ResizeObserver que no cambian dimensiones reales
   const { w, h } = _dims();
+  if (w === 0 || h === 0) return; // Ignore if hidden
   if (Math.abs(w - _prevW) < 4 && Math.abs(h - _prevH) < 4) return;
 
   const prev = _selected;
@@ -354,6 +358,7 @@ function _rebuild() {
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 function _dims() {
+  if (!_container || _container.clientWidth === 0) return { w: 0, h: 0 };
   const r = _container.getBoundingClientRect();
   return { w: Math.max(r.width, 200), h: Math.max(r.height, 160) };
 }

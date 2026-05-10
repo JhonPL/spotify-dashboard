@@ -102,6 +102,11 @@ function _build() {
 
   const prevScroll = _scrollY;
 
+  const W = _container.clientWidth;
+  const H = _container.clientHeight;
+  if (W === 0 || H === 0) return; // Prevent building when hidden
+  _prevW = W; _prevH = H;
+
   _unsubs.forEach(fn => fn());
   _unsubs = [];
   _container.innerHTML = "";
@@ -127,10 +132,6 @@ function _build() {
     values     = valid.map(g => allValues[allGenres.indexOf(g)]);
     normalized = valid.map(g => allNorm[allGenres.indexOf(g)]);
   }
-
-  const W = _container.clientWidth  || 400;
-  const H = _container.clientHeight || 320;
-  _prevW = W; _prevH = H;
 
   const innerW = W - MARGIN.left - MARGIN.right - (_isFS ? SCROLL_W + 4 : 2);
 
@@ -340,6 +341,7 @@ function _build() {
   // ── RESIZE ────────────────────────────────────────────────────────────────
   if (_resizeObs) _resizeObs.disconnect();
   _resizeObs = new ResizeObserver(_debounce(() => {
+    if (!_container || _container.clientWidth === 0) return; // Prevent building when hidden
     const nW = _container.clientWidth;
     const nH = _container.clientHeight;
     if (Math.abs(nW - _prevW) < 4 && Math.abs(nH - _prevH) < 4) return;
