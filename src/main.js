@@ -15,8 +15,8 @@ import { clearAllFilters, selectGenre } from "./core/filters.js";
 
 // ── Gráficos implementados ─────────────────────────────────────────────────
 import { initTreemap }   from "./charts/treemap.js";
-import { initHeatmap }      from "./charts/heatmap.js";      // próximo
-// import { initScatter }      from "./charts/scatterplot.js";  // próximo
+import { initHeatmap }      from "./charts/heatmap.js";      
+import { initScatter }      from "./charts/scatterplot.js";
 // import { initStreamgraph }  from "./charts/streamgraph.js";  // próximo
 
 // ── Textos por vista ────────────────────────────────────────────────────────
@@ -139,7 +139,7 @@ function initViewCharts(viewId) {
     case "overview":
       initTreemap(document.getElementById("chart-treemap"));
       initHeatmap(document.getElementById("chart-heatmap"));
-      // initScatter(document.getElementById("chart-scatter"));
+      initScatter(document.getElementById("chart-scatter"));
       // initStreamgraph(document.getElementById("chart-streamgraph"));
       break;
 
