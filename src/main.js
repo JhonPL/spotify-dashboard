@@ -20,6 +20,8 @@ import { initScatter }   from "./charts/scatterplot.js";
 import { initStreamgraph }  from "./charts/streamgraph.js";
 import { initRadar } from "./charts/radar.js";
 import { initChord } from "./charts/chord.js";
+import { initViolin } from "./charts/violin.js";
+import { initRidgeline } from "./charts/ridgeline.js";
 
 // ── Textos por vista ────────────────────────────────────────────────────────
 const VIEW_TITLES = {
@@ -148,8 +150,8 @@ function initViewCharts(viewId) {
     case "genres":
       initRadar(document.getElementById("chart-radar"));
       initChord(document.getElementById("chart-chord"));
-      // initViolin(document.getElementById("chart-violin"));
-      // initRidgeline(document.getElementById("chart-ridgeline"));
+      initViolin(document.getElementById("chart-violin"));
+      initRidgeline(document.getElementById("chart-ridgeline"));
       break;
 
     case "features":
