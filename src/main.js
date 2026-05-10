@@ -95,8 +95,12 @@ function updateKPIs(meta, genres) {
 // ── Filtro global (select + pill de limpiar) ─────────────────────────────────
 function initGlobalFilter() {
   const select = document.getElementById("global-genre-select");
+  let isSettingValue = false;  // Flag para evitar loop de sincronización
 
   select.addEventListener("change", (e) => {
+    // Ignorar cambios programáticos (evita loop infinito)
+    if (isSettingValue) return;
+    
     const genre = e.target.value;
     if (genre) selectGenre(genre);
     else clearAllFilters();
@@ -104,16 +108,22 @@ function initGlobalFilter() {
 
   document.getElementById("filter-clear")?.addEventListener("click", () => {
     clearAllFilters();
+    isSettingValue = true;
     select.value = "";
+    isSettingValue = false;
   });
 
   // Sincronizar select cuando se filtra desde un gráfico (p.ej. clic en treemap)
   on("genre:select", ({ genre }) => {
+    isSettingValue = true;
     select.value = genre ?? "";
+    isSettingValue = false;
   });
 
   on("filters:clear", () => {
+    isSettingValue = true;
     select.value = "";
+    isSettingValue = false;
   });
 }
 

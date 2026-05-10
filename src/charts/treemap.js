@@ -16,7 +16,7 @@ import tooltip      from "../utils/tooltip.js";
 const MARGIN      = { top: 4, right: 4, bottom: 4, left: 4 };
 const MIN_LABEL_W = 44;
 const MIN_LABEL_H = 22;
-const TRANSITION  = 300;
+const TRANSITION  = 250;
 
 // ─── Estado del módulo ────────────────────────────────────────────────────────
 let _container      = null;
@@ -24,6 +24,9 @@ let _svg            = null;
 let _selected       = null;
 let _resizeObs      = null;
 let _unsubListeners = [];
+let _prevW          = 0;
+let _prevH          = 0;
+let _obsTimer       = null;  // Timer para reanudar el observer tras la transición
 
 // ─── Escala de color ──────────────────────────────────────────────────────────
 function buildColorScale(data) {
@@ -69,6 +72,8 @@ function _build() {
   _container.classList.add("rendered");
 
   const { w, h } = _dims();
+  _prevW = w;
+  _prevH = h;
   const innerW = w - MARGIN.left - MARGIN.right;
   const innerH = h - MARGIN.top  - MARGIN.bottom;
 
@@ -218,7 +223,8 @@ function _build() {
 
   // ── ResizeObserver ────────────────────────────────────────────────────────
   if (_resizeObs) _resizeObs.disconnect();
-  _resizeObs = new ResizeObserver(_debounce(_rebuild, 220));
+  // Debounce > TRANSITION para no reconstruir durante animaciones D3
+  _resizeObs = new ResizeObserver(_debounce(_rebuild, 400));
   _resizeObs.observe(_container);
 }
 
@@ -238,17 +244,26 @@ function _toggleSelection(genre) {
 // ─── Focus: oscurecer celdas no seleccionadas con tm-dim ──────────────────────
 // Usamos fill-opacity en un rect overlay en lugar de opacity en el <g>
 // para no interferir con el shimmer CSS del panel__body::before
-function _applyFocus(genre) {
+function _applyFocus(genre, instant = false) {
   if (!_svg) return;
+  const dur = instant ? 0 : TRANSITION;
+
+  // Pausar observer durante la transición para evitar rebuilds espurios
+  // (el pill de filtro que aparece en el topbar cambia el tamaño del panel)
+  _pauseObserver(dur + 50);
+
+  // Interrumpir transiciones en curso antes de iniciar nuevas
+  _svg.selectAll(".tm-cell .tm-dim").interrupt();
+  _svg.selectAll(".tm-cell .tm-bg").interrupt();
 
   // Oscurecer las NO seleccionadas
   _svg.selectAll(".tm-cell .tm-dim")
-    .transition().duration(TRANSITION)
+    .transition().duration(dur)
     .attr("fill-opacity", (d) => d.data.track_genre === genre ? 0 : 0.72);
 
   // Borde verde en la seleccionada
   _svg.selectAll(".tm-cell .tm-bg")
-    .transition().duration(TRANSITION)
+    .transition().duration(dur)
     .attr("stroke",       (d) => d.data.track_genre === genre ? "#1DB954" : "rgba(0,0,0,0.3)")
     .attr("stroke-width", (d) => d.data.track_genre === genre ? 2 : 0.5);
 }
@@ -256,6 +271,14 @@ function _applyFocus(genre) {
 // ─── Restaurar todas las celdas ───────────────────────────────────────────────
 function _restoreAll() {
   if (!_svg) return;
+
+  // Pausar observer durante la transición
+  _pauseObserver(TRANSITION + 50);
+
+  // Interrumpir transiciones en curso antes de iniciar nuevas
+  _svg.selectAll(".tm-cell .tm-dim").interrupt();
+  _svg.selectAll(".tm-cell .tm-bg").interrupt();
+
   _svg.selectAll(".tm-cell .tm-dim")
     .transition().duration(TRANSITION)
     .attr("fill-opacity", 0);
@@ -268,9 +291,14 @@ function _restoreAll() {
 
 // ─── Rebuild en resize ────────────────────────────────────────────────────────
 function _rebuild() {
+  // Ignorar notificaciones spurias del ResizeObserver que no cambian dimensiones reales
+  const { w, h } = _dims();
+  if (Math.abs(w - _prevW) < 4 && Math.abs(h - _prevH) < 4) return;
+
   const prev = _selected;
   _build();
-  if (prev) { _selected = prev; _applyFocus(prev); }
+  // Aplicar foco sin transición para que no sea cancelado por D3
+  if (prev) { _selected = prev; _applyFocus(prev, true); }
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -287,6 +315,23 @@ function _truncate(str, max) {
 function _debounce(fn, ms) {
   let t;
   return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); };
+}
+
+// Pausar el ResizeObserver por `ms` milisegundos para evitar rebuilds espurios
+// durante las transiciones D3 (el pill del topbar cambia el tamaño del panel)
+function _pauseObserver(ms) {
+  if (!_resizeObs || !_container) return;
+  _resizeObs.unobserve(_container);
+  clearTimeout(_obsTimer);
+  _obsTimer = setTimeout(() => {
+    if (_resizeObs && _container) {
+      // Actualizar dimensiones de referencia antes de reanudar
+      const { w, h } = _dims();
+      _prevW = w;
+      _prevH = h;
+      _resizeObs.observe(_container);
+    }
+  }, ms);
 }
 
 export default { initTreemap };

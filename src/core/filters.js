@@ -132,7 +132,8 @@ export function hoverGenre(genre) {
 export function clearAllFilters() {
   store.clearFilters();
   emit("filters:clear", {});
-  emit("genre:select",  { genre: null });
+  // No emitir genre:select aquí — filters:clear ya señaliza a todos los gráficos.
+  // Emitirlo causaría un double-trigger que genera conflictos en transiciones D3.
 
   const pill = document.getElementById("active-filter");
   if (pill) pill.style.display = "none";
