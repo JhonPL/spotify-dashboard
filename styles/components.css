@@ -20,8 +20,8 @@
   border-bottom: 1px solid var(--border-subtle);
   flex-shrink: 0;
 }
-.panel__header h2 { font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); }
-.panel__hint      { font-size: 0.7rem; color: var(--text-hint); }
+.panel__header h2  { font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); }
+.panel__hint       { font-size: 0.7rem; color: var(--text-hint); }
 
 .panel__body {
   flex: 1;
@@ -29,28 +29,24 @@
   overflow: hidden;
 }
 
-/* ── Loading skeleton ─────────────────────────────────────────────────────── */
-/* Usa ::after (no ::before) y anima opacity — no background-position.        */
-/* opacity en pseudo-elemento se composita en GPU y NO causa repaints         */
-/* en elementos SVG hermanos, evitando el parpadeo con transiciones D3.       */
-.panel__body.loading::after {
+/* ── Estado de carga ──────────────────────────────────────────────────────── */
+.panel__body::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(255, 255, 255, 0.03);
-  animation: panel-pulse 1.4s ease-in-out infinite;
-  pointer-events: none;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.03) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease infinite;
   z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
 }
+.panel__body.loading::before { opacity: 1; }
 
-/* Cuando el panel ya tiene SVG, desactivar el loading aunque la clase siga  */
-.panel__body.loading:has(svg)::after {
-  display: none;
-}
-
-@keyframes panel-pulse {
-  0%, 100% { opacity: 0; }
-  50%       { opacity: 1; }
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
 }
 
 /* ── SVG base para todos los gráficos ────────────────────────────────────── */
@@ -60,7 +56,7 @@
   height: 100%;
 }
 
-/* ── Ejes D3 ──────────────────────────────────────────────────────────────── */
+/* Ejes D3 */
 .axis path, .axis line {
   stroke: var(--border-soft);
   stroke-width: 0.5;
@@ -100,16 +96,16 @@
   flex-shrink: 0;
 }
 
-/* ── Brushing D3 ──────────────────────────────────────────────────────────── */
+/* ── Brushing ─────────────────────────────────────────────────────────────── */
 .selection {
   fill: rgba(29, 185, 84, 0.1) !important;
   stroke: var(--spotify-green) !important;
   stroke-width: 1px !important;
 }
 
-/* ── Highlight coordinado (cross-filtering) ───────────────────────────────── */
-.dimmed  { opacity: 0.15 !important; transition: opacity 0.2s; }
-.focused { opacity: 1    !important; transition: opacity 0.2s; }
+/* ── Highlight coordinado ─────────────────────────────────────────────────── */
+.dimmed   { opacity: 0.15 !important; transition: opacity 0.2s; }
+.focused  { opacity: 1   !important; transition: opacity 0.2s; }
 
 /* ── Botones de zoom ──────────────────────────────────────────────────────── */
 .zoom-controls {
@@ -137,3 +133,7 @@
   .logo-text { display: none; }
   .nav-item { justify-content: center; padding: 12px; }
 }
+
+/* ── Fullscreen para cualquier panel ──────────────────────────────────────── */
+.panel:fullscreen { border-radius: 0; }
+.panel:fullscreen .panel__body { height: calc(100vh - 48px); }
