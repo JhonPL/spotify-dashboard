@@ -14,8 +14,12 @@ import tooltip      from "../utils/tooltip.js";
 
 // ─── Constantes ──────────────────────────────────────────────────────────────
 const MARGIN      = { top: 4, right: 4, bottom: 4, left: 4 };
-const MIN_LABEL_W = 44;
-const MIN_LABEL_H = 22;
+// Umbrales mínimos para mostrar texto — muy bajos para cubrir la mayor cantidad
+// de celdas posible. El truncado se encarga de ajustar a lo que quepa.
+const CHAR_W_H    = 6.0;   // px por carácter en horizontal (fuente 9px)
+const CHAR_W_V    = 6.2;   // px por carácter en vertical   (fuente 9px)
+const MIN_ANY_H   = 10;    // altura mínima absoluta para cualquier etiqueta
+const MIN_ANY_W   = 8;     // ancho mínimo absoluto para cualquier etiqueta
 const TRANSITION  = 250;
 
 // ─── Estado del módulo ────────────────────────────────────────────────────────
@@ -142,38 +146,85 @@ function _build() {
     .attr("fill-opacity", 0)           // empieza invisible
     .style("pointer-events", "none");
 
-  // ── Etiquetas ─────────────────────────────────────────────────────────────
+  // ── Etiquetas: muestra lo que quepa en cada celda ─────────────────────────
+  // Prioridad: horizontal si el ancho lo permite, vertical si la altura lo permite.
+  // Siempre se muestra aunque solo quepan 1-2 caracteres.
   cell.each(function (d) {
     const cw = d.x1 - d.x0;
     const ch = d.y1 - d.y0;
-    if (cw < MIN_LABEL_W || ch < MIN_LABEL_H) return;
+    const sel = d3.select(this);
 
-    const sel      = d3.select(this);
-    const fontSize = cw > 90 ? "11px" : "9px";
-    const hasSub   = ch > 38 && cw > 60;
-    const nameY    = hasSub ? 15 : Math.floor(ch / 2) + 4;
-    const maxChars = Math.floor(cw / 6.2);
+    // Celda demasiado pequeña en ambas dimensiones → sin etiqueta
+    if (cw < MIN_ANY_W || ch < MIN_ANY_H) return;
 
-    sel.append("text")
-      .attr("class",       "tm-label")
-      .attr("x",           6)
-      .attr("y",           nameY)
-      .attr("font-size",   fontSize)
-      .attr("font-weight", "600")
-      .attr("fill",        "#ffffff")
-      .attr("fill-opacity", 0.9)
-      .style("pointer-events", "none")
-      .text(_truncate(d.data.track_genre, maxChars));
+    // Caracteres que caben en horizontal (restando padding de 6px a cada lado)
+    const charsH = Math.floor((cw - 8) / CHAR_W_H);
+    // Caracteres que caben en vertical (restando padding 5px arriba y abajo)
+    const charsV = Math.floor((ch - 10) / CHAR_W_V);
 
-    if (hasSub) {
+    // ── Preferir horizontal si caben ≥ 2 chars y hay altura mínima ────────
+    if (charsH >= 2 && ch >= MIN_ANY_H) {
+      const fontSize = cw > 90 ? "11px" : "9px";
+      const hasSub   = ch > 38 && cw > 70 && charsH >= 5;
+      const nameY    = hasSub ? 15 : Math.floor(ch / 2) + 4;
+
       sel.append("text")
-        .attr("class",       "tm-sublabel")
-        .attr("x",           6)
-        .attr("y",           29)
-        .attr("font-size",   "9px")
-        .attr("fill",        "rgba(255,255,255,0.48)")
+        .attr("class",        "tm-label")
+        .attr("x",            5)
+        .attr("y",            nameY)
+        .attr("font-size",    fontSize)
+        .attr("font-weight",  "600")
+        .attr("fill",         "#ffffff")
+        .attr("fill-opacity", 0.9)
         .style("pointer-events", "none")
-        .text(`Pop ${fmt(d.data.popularity, 0)}`);
+        .text(_truncate(d.data.track_genre, charsH));
+
+      if (hasSub) {
+        sel.append("text")
+          .attr("class",       "tm-sublabel")
+          .attr("x",           5)
+          .attr("y",           29)
+          .attr("font-size",   "9px")
+          .attr("fill",        "rgba(255,255,255,0.48)")
+          .style("pointer-events", "none")
+          .text(`Pop ${fmt(d.data.popularity, 0)}`);
+      }
+      return;
+    }
+
+    // ── Vertical si caben ≥ 2 chars en altura y hay ancho mínimo ──────────
+    if (charsV >= 2 && cw >= MIN_ANY_W) {
+      const fontSize = cw >= 18 ? "9px" : "8px";
+      const cx = Math.floor(cw / 2);
+      const cy = Math.floor(ch / 2);
+
+      sel.append("text")
+        .attr("class",        "tm-label tm-label--vert")
+        .attr("transform",    `translate(${cx},${cy}) rotate(-90)`)
+        .attr("text-anchor",  "middle")
+        .attr("dominant-baseline", "central")
+        .attr("font-size",    fontSize)
+        .attr("font-weight",  "600")
+        .attr("fill",         "#ffffff")
+        .attr("fill-opacity", 0.85)
+        .style("pointer-events", "none")
+        .text(_truncate(d.data.track_genre, charsV));
+      return;
+    }
+
+    // ── Fallback: mostrar 1 carácter horizontal si cabe algo ──────────────
+    if (charsH >= 1 && ch >= MIN_ANY_H) {
+      sel.append("text")
+        .attr("class",        "tm-label")
+        .attr("x",            Math.floor(cw / 2))
+        .attr("y",            Math.floor(ch / 2) + 4)
+        .attr("font-size",    "8px")
+        .attr("font-weight",  "600")
+        .attr("fill",         "#ffffff")
+        .attr("fill-opacity", 0.75)
+        .attr("text-anchor",  "middle")
+        .style("pointer-events", "none")
+        .text(d.data.track_genre[0]);
     }
   });
 
@@ -308,8 +359,12 @@ function _dims() {
 }
 
 function _truncate(str, max) {
-  if (!str) return "";
-  return str.length > max ? str.slice(0, Math.max(1, max - 1)) + "…" : str;
+  if (!str || max < 1) return "";
+  if (str.length <= max) return str;
+  // Solo añadir "…" si hay espacio para al menos 1 carácter real + el símbolo
+  if (max >= 3) return str.slice(0, max - 1) + "…";
+  // max 1 ó 2: mostrar caracteres crudos sin símbolo
+  return str.slice(0, max);
 }
 
 function _debounce(fn, ms) {
