@@ -1,0 +1,139 @@
+/* ─── components.css ──────────────────────────────────────────────────────── */
+
+/* ── Panel ────────────────────────────────────────────────────────────────── */
+.panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--panel-radius);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: var(--transition);
+}
+.panel:hover { border-color: var(--border-soft); }
+
+.panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px var(--panel-padding) 10px;
+  border-bottom: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+.panel__header h2 { font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); }
+.panel__hint      { font-size: 0.7rem; color: var(--text-hint); }
+
+.panel__body {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Loading skeleton ─────────────────────────────────────────────────────── */
+/* Usa ::after (no ::before) y anima opacity — no background-position.        */
+/* opacity en pseudo-elemento se composita en GPU y NO causa repaints         */
+/* en elementos SVG hermanos, evitando el parpadeo con transiciones D3.       */
+.panel__body.loading::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.03);
+  animation: panel-pulse 1.4s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Cuando el panel ya tiene SVG, desactivar el loading aunque la clase siga  */
+.panel__body.loading:has(svg)::after {
+  display: none;
+}
+
+@keyframes panel-pulse {
+  0%, 100% { opacity: 0; }
+  50%       { opacity: 1; }
+}
+
+/* ── SVG base para todos los gráficos ────────────────────────────────────── */
+.panel__body svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Ejes D3 ──────────────────────────────────────────────────────────────── */
+.axis path, .axis line {
+  stroke: var(--border-soft);
+  stroke-width: 0.5;
+}
+.axis text {
+  fill: var(--text-muted);
+  font-size: 11px;
+  font-family: var(--font);
+}
+.axis .domain { display: none; }
+
+/* Grid lines */
+.grid-line {
+  stroke: var(--border-subtle);
+  stroke-width: 0.5;
+  stroke-dasharray: 2 4;
+}
+
+/* ── Leyendas ─────────────────────────────────────────────────────────────── */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px var(--panel-padding);
+  border-top: 1px solid var(--border-subtle);
+}
+.legend-item {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 0.7rem; color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition);
+}
+.legend-item:hover { color: var(--text-primary); }
+.legend-swatch {
+  width: 8px; height: 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* ── Brushing D3 ──────────────────────────────────────────────────────────── */
+.selection {
+  fill: rgba(29, 185, 84, 0.1) !important;
+  stroke: var(--spotify-green) !important;
+  stroke-width: 1px !important;
+}
+
+/* ── Highlight coordinado (cross-filtering) ───────────────────────────────── */
+.dimmed  { opacity: 0.15 !important; transition: opacity 0.2s; }
+.focused { opacity: 1    !important; transition: opacity 0.2s; }
+
+/* ── Botones de zoom ──────────────────────────────────────────────────────── */
+.zoom-controls {
+  position: absolute; top: 8px; right: 8px;
+  display: flex; gap: 4px; z-index: 10;
+}
+.zoom-btn {
+  width: 24px; height: 24px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-soft);
+  border-radius: 6px;
+  color: var(--text-secondary);
+  font-size: 14px; line-height: 1;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: var(--transition);
+}
+.zoom-btn:hover { background: var(--bg-hover); color: var(--text-primary); }
+
+/* ── Responsive mínimo ────────────────────────────────────────────────────── */
+@media (max-width: 1200px) {
+  :root { --sidebar-w: 56px; }
+  .sidebar__nav .nav-item span,
+  .sidebar__meta,
+  .logo-text { display: none; }
+  .nav-item { justify-content: center; padding: 12px; }
+}
