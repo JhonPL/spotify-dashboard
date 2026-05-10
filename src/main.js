@@ -17,7 +17,7 @@ import { clearAllFilters, selectGenre } from "./core/filters.js";
 import { initTreemap }   from "./charts/treemap.js";
 import { initHeatmap }      from "./charts/heatmap.js";      
 import { initScatter }      from "./charts/scatterplot.js";
-// import { initStreamgraph }  from "./charts/streamgraph.js";  // próximo
+import { initStreamgraph }  from "./charts/streamgraph.js"; 
 
 // ── Textos por vista ────────────────────────────────────────────────────────
 const VIEW_TITLES = {
@@ -140,7 +140,7 @@ function initViewCharts(viewId) {
       initTreemap(document.getElementById("chart-treemap"));
       initHeatmap(document.getElementById("chart-heatmap"));
       initScatter(document.getElementById("chart-scatter"));
-      // initStreamgraph(document.getElementById("chart-streamgraph"));
+      initStreamgraph(document.getElementById("chart-streamgraph"));
       break;
 
     case "genres":
