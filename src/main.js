@@ -25,6 +25,7 @@ import { initRidgeline } from "./charts/ridgeline.js";
 import { initParallel } from "./charts/parallel.js";
 import { initHexbin } from "./charts/hexbin.js";
 import { initHistogram } from "./charts/histogram.js";
+import { initBubble } from "./charts/bubble.js";
 
 // ── Textos por vista ────────────────────────────────────────────────────────
 const VIEW_TITLES = {
@@ -164,7 +165,7 @@ function initViewCharts(viewId) {
       break;
 
     case "artists":
-      // initBubble(document.getElementById("chart-bubble"));
+      initBubble(document.getElementById("chart-bubble"));
       // initPacking(document.getElementById("chart-packing"));
       // initSmallMultiples(document.getElementById("chart-small-multiples"));
       break;
