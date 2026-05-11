@@ -28,6 +28,7 @@ import { initHistogram } from "./charts/histogram.js";
 import { initBubble } from "./charts/bubble.js";
 import { initPacking } from "./charts/packing.js";
 import { initSmallMultiples } from "./charts/smallMultiples.js";
+import { initForce } from "./charts/forceGraph.js";
 
 // ── Textos por vista ────────────────────────────────────────────────────────
 const VIEW_TITLES = {
@@ -173,8 +174,8 @@ function initViewCharts(viewId) {
       break;
 
     case "relations":
-      // initForce(document.getElementById("chart-force"));
-      // initChord(document.getElementById("chart-chord2"));
+      initForce(document.getElementById("chart-force"));
+      // initChord2(document.getElementById("chart-chord"));
       // initSankey(document.getElementById("chart-sankey"));
       break;
   }
