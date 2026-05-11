@@ -185,8 +185,8 @@
   flex: 1;
 }
 .panel--parallel   { grid-column: 1 / -1; min-height: 320px; }
-.panel--hexbin     { min-height: 280px; }
-.panel--histogram  { min-height: 280px; }
+.panel--hexbin     { grid-column: 1 / -1; min-height: 350px; }
+.panel--histogram  { grid-column: 1 / -1; min-height: 280px; }
 
 /* Artistas */
 .grid--artists {

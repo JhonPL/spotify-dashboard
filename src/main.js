@@ -23,6 +23,7 @@ import { initChord } from "./charts/chord.js";
 import { initViolin } from "./charts/violin.js";
 import { initRidgeline } from "./charts/ridgeline.js";
 import { initParallel } from "./charts/parallel.js";
+import { initHexbin } from "./charts/hexbin.js";
 
 // ── Textos por vista ────────────────────────────────────────────────────────
 const VIEW_TITLES = {
@@ -157,7 +158,7 @@ function initViewCharts(viewId) {
 
     case "features":
       initParallel(document.getElementById("chart-parallel"));
-      // initHexbin(document.getElementById("chart-hexbin"));
+      initHexbin(document.getElementById("chart-hexbin"));
       // initHistogram(document.getElementById("chart-histogram"));
       break;
 
