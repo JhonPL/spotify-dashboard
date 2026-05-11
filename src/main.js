@@ -28,7 +28,8 @@ import { initHistogram } from "./charts/histogram.js";
 import { initBubble } from "./charts/bubble.js";
 import { initPacking } from "./charts/packing.js";
 import { initSmallMultiples } from "./charts/smallMultiples.js";
-import { initForce } from "./charts/forceGraph.js";
+import { initForce }          from "./charts/forceGraph.js";
+import { initSunburst }       from "./charts/sunburst.js";
 
 // ── Textos por vista ────────────────────────────────────────────────────────
 const VIEW_TITLES = {
@@ -156,7 +157,7 @@ function initViewCharts(viewId) {
 
     case "genres":
       initRadar(document.getElementById("chart-radar"));
-      initChord(document.getElementById("chart-chord"));
+      initSunburst(document.getElementById("chart-sunburst"));
       initViolin(document.getElementById("chart-violin"));
       initRidgeline(document.getElementById("chart-ridgeline"));
       break;
@@ -175,7 +176,7 @@ function initViewCharts(viewId) {
 
     case "relations":
       initForce(document.getElementById("chart-force"));
-      // initChord2(document.getElementById("chart-chord"));
+      initChord(document.getElementById("chart-chord"));
       // initSankey(document.getElementById("chart-sankey"));
       break;
   }

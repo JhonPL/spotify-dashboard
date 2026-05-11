@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,47 +12,71 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 </head>
+
 <body>
 
   <!-- ── Sidebar nav ──────────────────────────────────────────── -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar__logo">
       <svg viewBox="0 0 24 24" fill="none" class="logo-icon">
-        <circle cx="12" cy="12" r="11" fill="var(--spotify-green)" opacity="0.15"/>
-        <path d="M7 14.5c2.5-1 5.5-1 8 0M6 11c3.5-1.5 7.5-1.5 11 0M8 17.5c2-0.8 5-0.8 7 0"
-              stroke="var(--spotify-green)" stroke-width="1.8" stroke-linecap="round"/>
+        <circle cx="12" cy="12" r="11" fill="var(--spotify-green)" opacity="0.15" />
+        <path d="M7 14.5c2.5-1 5.5-1 8 0M6 11c3.5-1.5 7.5-1.5 11 0M8 17.5c2-0.8 5-0.8 7 0" stroke="var(--spotify-green)"
+          stroke-width="1.8" stroke-linecap="round" />
       </svg>
       <span class="logo-text">MusicIQ</span>
     </div>
 
     <nav class="sidebar__nav">
-      <a href="#overview"   class="nav-item active" data-view="overview">
-        <svg viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/></svg>
+      <a href="#overview" class="nav-item active" data-view="overview">
+        <svg viewBox="0 0 20 20" fill="none">
+          <rect x="2" y="2" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5" />
+          <rect x="11" y="2" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5" />
+          <rect x="2" y="11" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5" />
+          <rect x="11" y="11" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5" />
+        </svg>
         <span>Overview</span>
       </a>
-      <a href="#genres"     class="nav-item" data-view="genres">
-        <svg viewBox="0 0 20 20" fill="none"><path d="M10 2L12.5 8H18L13.5 11.5L15.5 18L10 14L4.5 18L6.5 11.5L2 8H7.5L10 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+      <a href="#genres" class="nav-item" data-view="genres">
+        <svg viewBox="0 0 20 20" fill="none">
+          <path d="M10 2L12.5 8H18L13.5 11.5L15.5 18L10 14L4.5 18L6.5 11.5L2 8H7.5L10 2Z" stroke="currentColor"
+            stroke-width="1.5" stroke-linejoin="round" />
+        </svg>
         <span>Géneros</span>
       </a>
-      <a href="#features"   class="nav-item" data-view="features">
-        <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M10 6v4l3 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <a href="#features" class="nav-item" data-view="features">
+        <svg viewBox="0 0 20 20" fill="none">
+          <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5" />
+          <path d="M10 6v4l3 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+        </svg>
         <span>Features</span>
       </a>
-      <a href="#artists"    class="nav-item" data-view="artists">
-        <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="7" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M4 18c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <a href="#artists" class="nav-item" data-view="artists">
+        <svg viewBox="0 0 20 20" fill="none">
+          <circle cx="10" cy="7" r="3" stroke="currentColor" stroke-width="1.5" />
+          <path d="M4 18c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+        </svg>
         <span>Artistas</span>
       </a>
-      <a href="#relations"  class="nav-item" data-view="relations">
-        <svg viewBox="0 0 20 20" fill="none"><circle cx="4" cy="10" r="2" stroke="currentColor" stroke-width="1.5"/><circle cx="16" cy="4" r="2" stroke="currentColor" stroke-width="1.5"/><circle cx="16" cy="16" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M6 10h4M12.5 5.5L10 9M12.5 14.5L10 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <a href="#relations" class="nav-item" data-view="relations">
+        <svg viewBox="0 0 20 20" fill="none">
+          <circle cx="4" cy="10" r="2" stroke="currentColor" stroke-width="1.5" />
+          <circle cx="16" cy="4" r="2" stroke="currentColor" stroke-width="1.5" />
+          <circle cx="16" cy="16" r="2" stroke="currentColor" stroke-width="1.5" />
+          <path d="M6 10h4M12.5 5.5L10 9M12.5 14.5L10 11" stroke="currentColor" stroke-width="1.5"
+            stroke-linecap="round" />
+        </svg>
         <span>Relaciones</span>
       </a>
     </nav>
 
     <div class="sidebar__meta" id="sidebar-meta">
       <!-- Poblado por meta.json -->
-      <div class="meta-stat"><span class="meta-value" id="meta-tracks">—</span><span class="meta-label">tracks</span></div>
-      <div class="meta-stat"><span class="meta-value" id="meta-genres">—</span><span class="meta-label">géneros</span></div>
-      <div class="meta-stat"><span class="meta-value" id="meta-artists">—</span><span class="meta-label">artistas</span></div>
+      <div class="meta-stat"><span class="meta-value" id="meta-tracks">—</span><span class="meta-label">tracks</span>
+      </div>
+      <div class="meta-stat"><span class="meta-value" id="meta-genres">—</span><span class="meta-label">géneros</span>
+      </div>
+      <div class="meta-stat"><span class="meta-value" id="meta-artists">—</span><span class="meta-label">artistas</span>
+      </div>
     </div>
   </aside>
 
@@ -105,20 +130,28 @@
 
       <!-- Grid principal overview -->
       <div class="grid grid--overview">
-        <div class="panel panel--treemap"   id="panel-treemap">
-          <div class="panel__header"><h2>Géneros por popularidad</h2><span class="panel__hint">Clic para filtrar</span></div>
+        <div class="panel panel--treemap" id="panel-treemap">
+          <div class="panel__header">
+            <h2>Géneros por popularidad</h2><span class="panel__hint">Clic para filtrar</span>
+          </div>
           <div class="panel__body" id="chart-treemap"></div>
         </div>
-        <div class="panel panel--heatmap"   id="panel-heatmap">
-          <div class="panel__header"><h2>Características por género</h2></div>
+        <div class="panel panel--heatmap" id="panel-heatmap">
+          <div class="panel__header">
+            <h2>Características por género</h2>
+          </div>
           <div class="panel__body" id="chart-heatmap"></div>
         </div>
-        <div class="panel panel--scatter"   id="panel-scatter">
-          <div class="panel__header"><h2>Energía vs Danceability</h2><span class="panel__hint">Brush para seleccionar</span></div>
+        <div class="panel panel--scatter" id="panel-scatter">
+          <div class="panel__header">
+            <h2>Energía vs Danceability</h2><span class="panel__hint">Brush para seleccionar</span>
+          </div>
           <div class="panel__body" id="chart-scatter"></div>
         </div>
         <div class="panel panel--streamgraph" id="panel-streamgraph">
-          <div class="panel__header"><h2>Energía por tier de popularidad</h2></div>
+          <div class="panel__header">
+            <h2>Energía por tier de popularidad</h2>
+          </div>
           <div class="panel__body" id="chart-streamgraph"></div>
         </div>
       </div>
@@ -128,22 +161,25 @@
     <section class="view" id="view-genres">
       <div class="grid grid--genres">
         <div class="panel panel--radar">
-          <div class="panel__header"><h2>Perfil de género</h2><span class="panel__hint">Selecciona un género</span></div>
+          <div class="panel__header">
+            <h2>Perfil de género</h2><span class="panel__hint">Selecciona un género</span>
+          </div>
           <div class="panel__body" id="chart-radar"></div>
         </div>
-        <div class="panel panel--chord">
-          <div class="panel__header">
-            <h2>Conexiones musicales</h2>
-            <span class="panel__hint">Similitud coseno entre géneros</span>
-          </div>
-          <div class="panel__body" id="chart-chord"></div>
+        <div class="panel panel--sunburst">
+          <div class="panel__header"><h2>Jerarquía musical</h2><span class="panel__hint">Clic para profundizar</span></div>
+          <div class="panel__body" id="chart-sunburst"></div>
         </div>
         <div class="panel panel--violin">
-          <div class="panel__header"><h2>Distribución de popularidad</h2></div>
+          <div class="panel__header">
+            <h2>Distribución de popularidad</h2>
+          </div>
           <div class="panel__body" id="chart-violin"></div>
         </div>
         <div class="panel panel--ridgeline">
-          <div class="panel__header"><h2>Distribución de energía</h2></div>
+          <div class="panel__header">
+            <h2>Distribución de energía</h2>
+          </div>
           <div class="panel__body" id="chart-ridgeline"></div>
         </div>
       </div>
@@ -153,15 +189,21 @@
     <section class="view" id="view-features">
       <div class="grid grid--features">
         <div class="panel panel--parallel">
-          <div class="panel__header"><h2>Parallel Coordinates</h2><span class="panel__hint">Arrastra ejes para reordenar</span></div>
+          <div class="panel__header">
+            <h2>Parallel Coordinates</h2><span class="panel__hint">Arrastra ejes para reordenar</span>
+          </div>
           <div class="panel__body" id="chart-parallel"></div>
         </div>
         <div class="panel panel--hexbin">
-          <div class="panel__header"><h2>Densidad Tempo × Energía</h2></div>
+          <div class="panel__header">
+            <h2>Densidad Tempo × Energía</h2>
+          </div>
           <div class="panel__body" id="chart-hexbin"></div>
         </div>
         <div class="panel panel--histogram">
-          <div class="panel__header"><h2>Distribuciones de audio</h2></div>
+          <div class="panel__header">
+            <h2>Distribuciones de audio</h2>
+          </div>
           <div class="panel__body" id="chart-histogram"></div>
         </div>
       </div>
@@ -171,15 +213,21 @@
     <section class="view" id="view-artists">
       <div class="grid grid--artists">
         <div class="panel panel--bubble">
-          <div class="panel__header"><h2>Top artistas</h2><span class="panel__hint">Tamaño = popularidad</span></div>
+          <div class="panel__header">
+            <h2>Top artistas</h2><span class="panel__hint">Tamaño = popularidad</span>
+          </div>
           <div class="panel__body" id="chart-bubble"></div>
         </div>
         <div class="panel panel--packing">
-          <div class="panel__header"><h2>Circular packing por género</h2></div>
+          <div class="panel__header">
+            <h2>Circular packing por género</h2>
+          </div>
           <div class="panel__body" id="chart-packing"></div>
         </div>
         <div class="panel panel--small-multiples">
-          <div class="panel__header"><h2>Small multiples — features</h2></div>
+          <div class="panel__header">
+            <h2>Small multiples — features</h2>
+          </div>
           <div class="panel__body" id="chart-small-multiples"></div>
         </div>
       </div>
@@ -189,15 +237,21 @@
     <section class="view" id="view-relations">
       <div class="grid grid--relations">
         <div class="panel panel--force">
-          <div class="panel__header"><h2>Red de similitud entre géneros</h2><span class="panel__hint">Arrastra nodos</span></div>
+          <div class="panel__header">
+            <h2>Red de similitud entre géneros</h2><span class="panel__hint">Arrastra nodos</span>
+          </div>
           <div class="panel__body" id="chart-force"></div>
         </div>
         <div class="panel panel--chord">
-          <div class="panel__header"><h2>Chord — conexiones musicales</h2></div>
+          <div class="panel__header">
+            <h2>Chord — conexiones musicales</h2>
+          </div>
           <div class="panel__body" id="chart-chord"></div>
         </div>
         <div class="panel panel--sankey">
-          <div class="panel__header"><h2>Flujo género → energía → popularidad</h2></div>
+          <div class="panel__header">
+            <h2>Flujo género → energía → popularidad</h2>
+          </div>
           <div class="panel__body" id="chart-sankey"></div>
         </div>
       </div>
@@ -211,4 +265,5 @@
   <!-- Entry point -->
   <script type="module" src="/src/main.js"></script>
 </body>
+
 </html>
