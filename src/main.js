@@ -30,6 +30,7 @@ import { initPacking } from "./charts/packing.js";
 import { initSmallMultiples } from "./charts/smallMultiples.js";
 import { initForce }          from "./charts/forceGraph.js";
 import { initSunburst }       from "./charts/sunburst.js";
+import { initSankey }         from "./charts/sankey.js";
 
 // ── Textos por vista ────────────────────────────────────────────────────────
 const VIEW_TITLES = {
@@ -177,7 +178,7 @@ function initViewCharts(viewId) {
     case "relations":
       initForce(document.getElementById("chart-force"));
       initChord(document.getElementById("chart-chord"));
-      // initSankey(document.getElementById("chart-sankey"));
+      initSankey(document.getElementById("chart-sankey"));
       break;
   }
 }
