@@ -328,25 +328,36 @@ function _render(isInitial) {
   _gPack.selectAll(".cp-label").remove();
 
   // Etiquetas de género (depth 1)
-  _gPack.selectAll(".cp-label-genre")
+  // Añadimos un "halo" (stroke) para máxima legibilidad
+  const genreLabels = _gPack.selectAll(".cp-label-genre")
     .data(nodes.filter(d => d.depth === 1 && d.r >= LABEL_GENRE_MIN_R), d => d.data.name)
-    .join("text")
-      .attr("class",           "cp-label cp-label-genre")
-      .attr("data-genre",      d => d.data.name)
-      .attr("x",               d => d.x)
-      .attr("y",               d => d.y - d.r + Math.min(d.r * 0.28, 18))
-      .attr("text-anchor",     "middle")
-      .attr("dominant-baseline", "central")
-      .attr("font-size",       d => Math.min(d.r * 0.2, 13) + "px")
-      .attr("font-weight",     "700")
-      .attr("fill",            d => genreColor(d.data.name))
-      .attr("fill-opacity",    d => _activeGenre ? (d.data.name === _activeGenre ? 1 : 0.15) : 0.9)
-      .attr("letter-spacing",  "0.3px")
-      .style("pointer-events", "none")
-      .text(d => {
-        const maxChars = Math.floor(d.r * 0.18);
-        return _truncate(d.data.name, Math.max(3, maxChars));
-      });
+    .join("g")
+      .attr("class", "cp-label cp-label-genre")
+      .style("pointer-events", "none");
+
+  genreLabels.append("text")
+    .attr("x",               d => d.x)
+    .attr("y",               d => d.y - d.r + Math.min(d.r * 0.28, 18))
+    .attr("text-anchor",     "middle")
+    .attr("dominant-baseline", "central")
+    .attr("font-size",       d => Math.min(d.r * 0.22, 14) + "px")
+    .attr("font-weight",     "800")
+    .attr("stroke",          "var(--bg-panel)")
+    .attr("stroke-width",    3)
+    .attr("stroke-linejoin", "round")
+    .attr("fill-opacity",    d => _activeGenre ? (d.data.name === _activeGenre ? 0.8 : 0.1) : 0.8)
+    .text(d => _truncate(d.data.name, Math.floor(d.r * 0.22)));
+
+  genreLabels.append("text")
+    .attr("x",               d => d.x)
+    .attr("y",               d => d.y - d.r + Math.min(d.r * 0.28, 18))
+    .attr("text-anchor",     "middle")
+    .attr("dominant-baseline", "central")
+    .attr("font-size",       d => Math.min(d.r * 0.22, 14) + "px")
+    .attr("font-weight",     "800")
+    .attr("fill",            d => genreColor(d.data.name))
+    .attr("fill-opacity",    d => _activeGenre ? 0 : 1) // Ocultar si hay selección
+    .text(d => _truncate(d.data.name, Math.floor(d.r * 0.22)));
 
   // Conteo de artistas bajo el nombre de género
   _gPack.selectAll(".cp-label-count")
@@ -354,33 +365,46 @@ function _render(isInitial) {
     .join("text")
       .attr("class",           "cp-label cp-label-count")
       .attr("x",               d => d.x)
-      .attr("y",               d => d.y - d.r + Math.min(d.r * 0.28, 18) + 14)
+      .attr("y",               d => d.y - d.r + Math.min(d.r * 0.28, 18) + 12)
       .attr("text-anchor",     "middle")
       .attr("dominant-baseline", "central")
       .attr("font-size",       "9px")
-      .attr("fill",            d => genreColor(d.data.name))
-      .attr("fill-opacity",    0.5)
+      .attr("font-weight",     "600")
+      .attr("fill",            "#fff")
+      .attr("fill-opacity",    d => _activeGenre ? 0 : 0.5) // Ocultar si hay selección
       .style("pointer-events", "none")
       .text(d => `${d.children?.length ?? 0} artistas`);
 
   // Etiquetas de artista (depth 2)
-  _gPack.selectAll(".cp-label-artist")
+  const artistLabels = _gPack.selectAll(".cp-label-artist")
     .data(nodes.filter(d => d.depth === 2 && d.r >= LABEL_ARTIST_MIN_R), d => d.data.name)
-    .join("text")
-      .attr("class",           "cp-label cp-label-artist")
-      .attr("x",               d => d.x)
-      .attr("y",               d => d.y)
-      .attr("text-anchor",     "middle")
-      .attr("dominant-baseline", "central")
-      .attr("font-size",       d => Math.min(d.r * 0.42, 9) + "px")
-      .attr("font-weight",     "500")
-      .attr("fill",            "#fff")
-      .attr("fill-opacity",    d => _activeGenre ? (d.data.genre === _activeGenre ? 0.9 : 0.05) : 0.75)
-      .style("pointer-events", "none")
-      .text(d => {
-        const maxChars = Math.floor(d.r * 0.22);
-        return _truncate(d.data.name, Math.max(2, maxChars));
-      });
+    .join("g")
+      .attr("class", "cp-label cp-label-artist")
+      .style("pointer-events", "none");
+
+  artistLabels.append("text")
+    .attr("x",               d => d.x)
+    .attr("y",               d => d.y)
+    .attr("text-anchor",     "middle")
+    .attr("dominant-baseline", "central")
+    .attr("font-size",       d => Math.min(d.r * 0.44, 9.5) + "px")
+    .attr("font-weight",     "600")
+    .attr("stroke",          "rgba(0,0,0,0.6)")
+    .attr("stroke-width",    2)
+    .attr("stroke-linejoin", "round")
+    .attr("fill-opacity",    d => _activeGenre ? (d.data.genre === _activeGenre ? 0.6 : 0.02) : 0.4)
+    .text(d => _truncate(d.data.name, Math.floor(d.r * 0.25)));
+
+  artistLabels.append("text")
+    .attr("x",               d => d.x)
+    .attr("y",               d => d.y)
+    .attr("text-anchor",     "middle")
+    .attr("dominant-baseline", "central")
+    .attr("font-size",       d => Math.min(d.r * 0.44, 9.5) + "px")
+    .attr("font-weight",     "600")
+    .attr("fill",            "#fff")
+    .attr("fill-opacity",    d => _activeGenre ? (d.data.genre === _activeGenre ? 1 : 0.05) : 0.9)
+    .text(d => _truncate(d.data.name, Math.floor(d.r * 0.25)));
 }
 
 // ─── Estilos de círculos ──────────────────────────────────────────────────────
@@ -440,9 +464,7 @@ function _applyGenreHighlight(genre) {
 
   _gPack.selectAll(".cp-label-genre, .cp-label-count")
     .transition().duration(TRANSITION)
-    .attr("fill-opacity", function(d) {
-      return d.data.name === genre ? 0.95 : 0.1;
-    });
+    .attr("fill-opacity", 0); // Ocultamos etiquetas generales al filtrar para ver bien los artistas
 
   _gPack.selectAll(".cp-label-artist")
     .transition().duration(TRANSITION)

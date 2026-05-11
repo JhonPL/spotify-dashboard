@@ -27,6 +27,7 @@ import { initHexbin } from "./charts/hexbin.js";
 import { initHistogram } from "./charts/histogram.js";
 import { initBubble } from "./charts/bubble.js";
 import { initPacking } from "./charts/packing.js";
+import { initSmallMultiples } from "./charts/smallMultiples.js";
 
 // ── Textos por vista ────────────────────────────────────────────────────────
 const VIEW_TITLES = {
@@ -168,7 +169,7 @@ function initViewCharts(viewId) {
     case "artists":
       initBubble(document.getElementById("chart-bubble"));
       initPacking(document.getElementById("chart-packing"));
-      // initSmallMultiples(document.getElementById("chart-small-multiples"));
+      initSmallMultiples(document.getElementById("chart-small-multiples"));
       break;
 
     case "relations":
