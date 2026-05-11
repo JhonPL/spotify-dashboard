@@ -26,6 +26,7 @@ import { initParallel } from "./charts/parallel.js";
 import { initHexbin } from "./charts/hexbin.js";
 import { initHistogram } from "./charts/histogram.js";
 import { initBubble } from "./charts/bubble.js";
+import { initPacking } from "./charts/packing.js";
 
 // ── Textos por vista ────────────────────────────────────────────────────────
 const VIEW_TITLES = {
@@ -166,13 +167,13 @@ function initViewCharts(viewId) {
 
     case "artists":
       initBubble(document.getElementById("chart-bubble"));
-      // initPacking(document.getElementById("chart-packing"));
+      initPacking(document.getElementById("chart-packing"));
       // initSmallMultiples(document.getElementById("chart-small-multiples"));
       break;
 
     case "relations":
       // initForce(document.getElementById("chart-force"));
-      // initChord(document.getElementById("chart-chord"));
+      // initChord(document.getElementById("chart-chord2"));
       // initSankey(document.getElementById("chart-sankey"));
       break;
   }
