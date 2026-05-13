@@ -79,31 +79,54 @@ export function genreColor(genre) {
   return _genreColor(genre);
 }
 
+// ─── Helpers de Tema ────────────────────────────────────────────────────────
+function isLight() {
+  return document.documentElement.classList.contains("light-mode");
+}
+
+function getBaseColor() {
+  return isLight() ? "#e0e0e0" : "#1a1a1a";
+}
+
 // ─── Escala divergente para correlación [-1, 1] ──────────────────────────────
-export const corrColor = d3.scaleLinear()
-  .domain([-1, -0.5, 0, 0.5, 1])
-  .range(["#1e3a5f", "#0d6ebd", "#2a2a2a", "#1aa34a", "#0a4f23"])
-  .clamp(true);
+export const corrColor = (val) => {
+  const scale = d3.scaleLinear()
+    .domain([-1, -0.5, 0, 0.5, 1])
+    .range(isLight() 
+      ? ["#1a3a5f", "#0d6ebd", "#f0f0f0", "#1aa34a", "#0a4f23"]
+      : ["#1e3a5f", "#0d6ebd", "#2a2a2a", "#1aa34a", "#0a4f23"])
+    .clamp(true);
+  return scale(val);
+};
 
 // ─── Escala de densidad (hexbin) ─────────────────────────────────────────────
-export const densityColor = d3.scaleSequential()
-  .domain([0, 1])
-  .interpolator(d3.interpolate("#0d2b1a", "#1DB954"));
+export const densityColor = (val) => {
+  const base = isLight() ? "#f0f0f0" : "#0d2b1a";
+  return d3.scaleSequential()
+    .domain([0, 1])
+    .interpolator(d3.interpolate(base, "#1DB954"))(val);
+};
 
 // ─── Escala de energía ───────────────────────────────────────────────────────
-export const energyColor = d3.scaleSequential()
-  .domain([0, 1])
-  .interpolator(d3.interpolate("#1e3a5f", "#f43f5e"));
+export const energyColor = (val) => {
+  return d3.scaleSequential()
+    .domain([0, 1])
+    .interpolator(d3.interpolate("#1e3a5f", "#f43f5e"))(val);
+};
 
 // ─── Escala de popularidad ───────────────────────────────────────────────────
-export const popularityColor = d3.scaleSequential()
-  .domain([0, 100])
-  .interpolator(d3.interpolate("#1a1a1a", "#1DB954"));
+export const popularityColor = (val) => {
+  return d3.scaleSequential()
+    .domain([0, 100])
+    .interpolator(d3.interpolate(getBaseColor(), "#1DB954"))(val);
+};
 
 // ─── Escala de valence: tristeza → alegría ───────────────────────────────────
-export const valenceColor = d3.scaleSequential()
-  .domain([0, 1])
-  .interpolator(d3.interpolate("#8b5cf6", "#f59e0b"));
+export const valenceColor = (val) => {
+  return d3.scaleSequential()
+    .domain([0, 1])
+    .interpolator(d3.interpolate("#8b5cf6", "#f59e0b"))(val);
+};
 
 // ─── Escala de tamaño para bubble / circular packing ─────────────────────────
 export function bubbleScale(data, key, minR = 4, maxR = 40) {
@@ -118,9 +141,11 @@ export function featureColor(feature) {
 }
 
 // ─── Escala de heatmap: blanco apagado → verde Spotify ──────────────────────
-export const heatmapColor = d3.scaleSequential()
-  .domain([0, 1])
-  .interpolator(d3.interpolate("#1a1a1a", "#1DB954"));
+export const heatmapColor = (val) => {
+  return d3.scaleSequential()
+    .domain([0, 1])
+    .interpolator(d3.interpolate(getBaseColor(), "#1DB954"))(val);
+};
 
 // ─── Utilidad: normalizar un array al rango [0,1] ───────────────────────────
 export function normalize(arr) {

@@ -137,3 +137,38 @@
 /* ── Fullscreen para cualquier panel ──────────────────────────────────────── */
 .panel:fullscreen { border-radius: 0; }
 .panel:fullscreen .panel__body { height: calc(100vh - 48px); }
+
+/* ── Theme Toggle ─────────────────────────────────────────────────────────── */
+.theme-toggle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border-soft);
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  margin-right: 12px;
+}
+
+.theme-toggle:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+  transform: scale(1.05);
+}
+
+.theme-toggle svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Control de iconos */
+.sun-icon { display: none; }
+.moon-icon { display: block; }
+
+:root.light-mode .sun-icon { display: block; }
+:root.light-mode .moon-icon { display: none; }

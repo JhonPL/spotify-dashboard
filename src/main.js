@@ -140,6 +140,30 @@ function initGlobalFilter() {
   });
 }
 
+// ── Gestión de Apariencia (Modo Claro/Oscuro) ────────────────────────────────
+function initThemeToggle() {
+  const toggleBtn = document.getElementById("theme-toggle");
+  const html = document.documentElement;
+
+  // Cargar preferencia guardada
+  const savedTheme = localStorage.getItem("theme") || "dark";
+  if (savedTheme === "light") {
+    html.classList.add("light-mode");
+  }
+
+  toggleBtn?.addEventListener("click", () => {
+    const isLight = html.classList.toggle("light-mode");
+    localStorage.setItem("theme", isLight ? "light" : "dark");
+    
+    // Al cambiar de tema, forzamos el re-renderizado de la vista actual
+    _initialized.clear();
+    const currentView = store.get("ui.activeView") || "overview";
+    initViewCharts(currentView);
+
+    emit("theme:change", { theme: isLight ? "light" : "dark" });
+  });
+}
+
 // ── Inicialización de gráficos por vista ─────────────────────────────────────
 // Inicializa los gráficos de una vista solo cuando se activa por primera vez.
 const _initialized = new Set();
@@ -188,6 +212,7 @@ async function bootstrap() {
   // 1. Nav y filtros (no dependen de datos)
   initNavigation();
   initGlobalFilter();
+  initThemeToggle();
 
   // 2. Cargar datos fase 1 (meta + genresSummary + featuresSample)
   await loadAll();

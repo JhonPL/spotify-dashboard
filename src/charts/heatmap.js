@@ -10,7 +10,7 @@ import store from "../core/store.js";
 import { on } from "../core/eventBus.js";
 import { selectGenre, clearAllFilters } from "../core/filters.js";
 import tooltip from "../utils/tooltip.js";
-import { FEATURE_LABELS } from "../utils/scales.js";
+import { FEATURE_LABELS, heatmapColor } from "../utils/scales.js";
 
 // ─── Constantes ───────────────────────────────────────────────────────────────
 const MARGIN      = { left: 85, right: 20, top: 0, bottom: 44 };
@@ -24,9 +24,7 @@ const MODE = {
   full:   { maxGenres: Infinity, cellH: 26, scroll: true },
 };
 
-const COLOR = d3.scaleSequential()
-  .domain([0, 1])
-  .interpolator(d3.interpolate("#0d1a12", "#1DB954"));
+const COLOR = heatmapColor;
 
 const FEAT_LABEL = {
   danceability:     "Dance",
@@ -207,7 +205,7 @@ function _build() {
   _svg.append("line")
     .attr("x1", 0).attr("x2", W)
     .attr("y1", HEADER_H).attr("y2", HEADER_H)
-    .attr("stroke", "rgba(255,255,255,0.07)").attr("stroke-width", 1);
+    .attr("stroke", "var(--border-subtle)").attr("stroke-width", 1);
 
   // ── BODY con clipPath ─────────────────────────────────────────────────────
   const clipG = _svg.append("g").attr("clip-path", `url(#${clipId})`);
@@ -360,14 +358,13 @@ function _buildScrollbar(W, cellH, cellPad) {
   const thumbH = Math.max(24, (sbH / _totalH) * sbH);
 
   _svg.append("rect")
-    .attr("x", sbX).attr("y", sbY)
     .attr("width", SCROLL_W).attr("height", sbH).attr("rx", SCROLL_W / 2)
-    .attr("fill", "rgba(255,255,255,0.05)");
+    .attr("fill", "var(--border-subtle)");
 
   const thumb = _svg.append("rect")
     .attr("x", sbX).attr("y", sbY)
     .attr("width", SCROLL_W).attr("height", thumbH).attr("rx", SCROLL_W / 2)
-    .attr("fill", "rgba(255,255,255,0.2)")
+    .attr("fill", "var(--border-strong)")
     .style("cursor", "pointer");
 
   _applyScrollFn = (newY) => {

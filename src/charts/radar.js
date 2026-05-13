@@ -120,7 +120,7 @@ function _build() {
   bodyWrap.appendChild(chartWrap);
 
   _statsWrap = document.createElement("div");
-  _statsWrap.style.cssText = `width: 200px; border-left: 1px solid var(--border-subtle); background: rgba(0,0,0,0.15); overflow-y: auto; padding: 16px;`;
+  _statsWrap.style.cssText = `width: 200px; border-left: 1px solid var(--border-subtle); background: var(--glass-medium); overflow-y: auto; padding: 16px;`;
   bodyWrap.appendChild(_statsWrap);
 
   // ── Dimensiones ───────────────────────────────────────────────────────────
@@ -188,8 +188,8 @@ function _drawWeb() {
     const points = _polygonPoints(level);
     _gWeb.append("polygon")
       .attr("points",        points.map(p => `${p.x},${p.y}`).join(" "))
-      .attr("fill",          i % 2 === 0 ? "rgba(255,255,255,0.03)" : "rgba(255,255,255,0.01)")
-      .attr("stroke",        level === 1.0 ? "rgba(255,255,255,0.2)" : "rgba(255,255,255,0.08)")
+      .attr("fill",          i % 2 === 0 ? "var(--glass-subtle)" : "transparent")
+      .attr("stroke",        level === 1.0 ? "var(--glass-strong)" : "var(--glass-soft)")
       .attr("stroke-width",  level === 1.0 ? 1.5 : 1)
       .attr("stroke-dasharray", level === 1.0 ? "none" : "4 4");
   });
@@ -200,7 +200,7 @@ function _drawWeb() {
     _gWeb.append("line")
       .attr("x1", _center.x).attr("y1", _center.y)
       .attr("x2", pt.x)     .attr("y2", pt.y)
-      .attr("stroke",       "rgba(255,255,255,0.12)")
+      .attr("stroke",       "var(--glass-medium)")
       .attr("stroke-width", 1);
   });
 }
@@ -244,7 +244,7 @@ function _drawLabels() {
       .attr("text-anchor",  anchor)
       .attr("font-size",    "10px")
       .attr("font-weight",  "600")
-      .attr("fill",         "rgba(255,255,255,0.9)")
+      .attr("fill",         "var(--text-primary)")
       .text(FEATURE_LABELS[axis] || axis);
   });
 
@@ -261,7 +261,7 @@ function _drawLabels() {
       .attr("height", 14)
       .attr("rx", 7)
       .attr("fill", "var(--bg-panel)")
-      .attr("stroke", "rgba(255,255,255,0.1)")
+      .attr("stroke", "var(--border-subtle)")
       .attr("stroke-width", 1)
       .style("pointer-events", "none");
 
@@ -564,14 +564,14 @@ function _buildStats(data) {
 
     // Barra A
     const barA = document.createElement("div");
-    barA.style.cssText = `height:6px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden;margin-bottom:${dB ? '2px' : '0'};`;
+    barA.style.cssText = `height:6px;background:var(--glass-soft);border-radius:3px;overflow:hidden;margin-bottom:${dB ? '2px' : '0'};`;
     barA.innerHTML = `<div style="height:100%;width:${valA * 100}%;background:${colorA};border-radius:3px;transition:width 0.4s ease;"></div>`;
     block.appendChild(barA);
 
     // Barra B
     if (dB) {
       const barB = document.createElement("div");
-      barB.style.cssText = `height:6px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden;`;
+      barB.style.cssText = `height:6px;background:var(--glass-soft);border-radius:3px;overflow:hidden;`;
       barB.innerHTML = `<div style="height:100%;width:${valB * 100}%;background:${colorB};border-radius:3px;transition:width 0.4s ease;"></div>`;
       block.appendChild(barB);
     }

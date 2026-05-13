@@ -15,6 +15,12 @@
   --bg-glass:       rgba(255, 255, 255, 0.04);
   --bg-glass-hover: rgba(255, 255, 255, 0.07);
 
+  /* Transparencias semánticas para gráficos */
+  --glass-subtle:   rgba(255, 255, 255, 0.03);
+  --glass-soft:     rgba(255, 255, 255, 0.08);
+  --glass-medium:   rgba(255, 255, 255, 0.15);
+  --glass-strong:   rgba(255, 255, 255, 0.25);
+
   /* Bordes */
   --border-subtle:  rgba(255, 255, 255, 0.06);
   --border-soft:    rgba(255, 255, 255, 0.10);
@@ -62,3 +68,38 @@
   --transition:   all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* ─── Modo Claro ─────────────────────────────────────────── */
+:root.light-mode {
+  /* Fondos */
+  --bg-base:        #f0f2f5;
+  --bg-surface:     #ffffff;
+  --bg-elevated:    #ffffff;
+  --bg-panel:       #ffffff;
+  --bg-hover:       #f6f6f6;
+  --bg-glass:       rgba(0, 0, 0, 0.03);
+  --bg-glass-hover: rgba(0, 0, 0, 0.06);
+
+  /* Transparencias semánticas para gráficos */
+  --glass-subtle:   rgba(0, 0, 0, 0.02);
+  --glass-soft:     rgba(0, 0, 0, 0.05);
+  --glass-medium:   rgba(0, 0, 0, 0.08);
+  --glass-strong:   rgba(0, 0, 0, 0.12);
+
+  /* Bordes */
+  --border-subtle:  rgba(0, 0, 0, 0.06);
+  --border-soft:    rgba(0, 0, 0, 0.10);
+  --border-strong:  rgba(0, 0, 0, 0.16);
+
+  /* Texto */
+  --text-primary:   #121212;
+  --text-secondary: #535353;
+  --text-muted:     #727272;
+  --text-hint:      #a7a7a7;
+
+  /* Sombras */
+  --shadow-sm:  0 2px 8px rgba(0,0,0,0.08);
+  --shadow-md:  0 4px 20px rgba(0,0,0,0.12);
+  --shadow-lg:  0 8px 40px rgba(0,0,0,0.15);
+  --glow-green: 0 0 20px rgba(29,185,84,0.1);
+}

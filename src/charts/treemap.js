@@ -34,10 +34,14 @@ let _obsTimer       = null;  // Timer para reanudar el observer tras la transici
 
 // ─── Escala de color ──────────────────────────────────────────────────────────
 function buildColorScale(data) {
+  const isLight = document.documentElement.classList.contains("light-mode");
   const [lo, hi] = d3.extent(data, (d) => d.popularity);
+  const base = isLight ? "#e0e7e1" : "#1a3a2a";
+  const mid  = isLight ? "#81c79a" : "#0f6b35";
+  
   return d3.scaleLinear()
     .domain([lo, lo + (hi - lo) * 0.45, hi])
-    .range(["#1a3a2a", "#0f6b35", "#1DB954"])
+    .range([base, mid, "#1DB954"])
     .clamp(true);
 }
 
